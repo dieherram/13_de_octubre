@@ -1,17 +1,31 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <p v-text="globalOpen"></p>
+    <p v-text="globalSales"></p>
+    <ul>
+      <li v-for="product in onSaleProducts" :key="product.id">
+        {{product.nombre}}
+      </li>
+    </ul>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import {mapState, mapGetters} from 'vuex'
 export default {
   name: 'App',
-  components: {
-    HelloWorld
+  computed: {
+    ...mapState(["open", "sales"]),
+    ...mapGetters(["availableProducts", "onSaleProducts"]),
+    globalOpen(){
+      let status = this.open
+      ? "abierto": "cerrado"
+      return `estado: ${status}`
+    },
+    globalSales (){
+      return `el total de ventas es: ${this.sales}`
+    },
   }
 }
 </script>
