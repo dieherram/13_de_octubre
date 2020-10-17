@@ -39,8 +39,30 @@ export default new Vuex.Store({
       }, ]
   },
   mutations: {
+    TOGGLE_OPEN(state){
+      state.open = !state.open
+    },
+    ADD_STOCK(state, product) {
+      let prod = state.products.find(p => p.id == product.id)
+      prod.stock += 1
+    },
+    REMOVE_STOCK(state, product){
+      let prod = state.products.find(p => p.id == product.id)
+      prod.stock -= 1
+    }
   },
   actions: {
+    toggleOpen({commit}){
+      commit("TOGGLE_OPEN")
+    },
+    addStock({commit}, product){
+      commit("ADD_STOCK", product)
+    },
+    removeStock({commit}, product){
+      setTimeout(() => {
+        commit('REMOVE_STOCK', product)
+      }, 4000);
+    }
   },
   getters:{
     availableProducts(state){
